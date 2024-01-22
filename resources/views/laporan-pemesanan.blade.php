@@ -8,7 +8,7 @@
                 <div class="card mt-5">
                     <div class="card-header">
                         <div class="col">
-                            <h2 class="main-title my-auto"  id="title_product">Monitoring Stok</h2>
+                            <h2 class="main-title my-auto"  id="title_product">Transaksi</h2>
                         </div>
                     </div>
                     <div class="col">
@@ -16,9 +16,10 @@
                             <div class="form-group">
                                 <input type="date" name="start_date" id="start_date" class="form-control" placeholder="start date" />
                             </div>
-                    
+                        
+                       
                             <div class="form-group input-group input-group-md">
-                                <input type="date" name="end_date" id="end_date" class="form-control" placeholder="end date" />
+                               <input type="date" name="end_date" id="end_date" class="form-control" placeholder="end date" />
                                 <span class="input-group-append">
                                     <button type="button" id="date" class="btn btn-primary float-right">
                                         Filter
@@ -35,10 +36,13 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 15%">Tanggal</th>
-                                        <th>Produk</th>
-                                       <th>Total Qty Masuk</th>
-                                        <th>Total Qty Keluar</th>
                                         <th>Brand</th>
+                                        <th>Produk</th>
+                                        <th>Harga Produk</th>
+                                        <th>Jenis</th>
+                                        <th>Qty</th>
+                                        <th>Nilai</th>
+                                        <th>Note</th>
                                     </tr>
                                 </thead>
                                 <tbody id="data">
@@ -56,9 +60,10 @@
 @section('js')
     <script>
         var parmas  = window.location.href.split('-').reverse()[0];
-        var url = "{{ url('/api/transaksi') }}";
-        var title;
-      
+        var url = "{{ url('/api/laporan-pemesanan') }}";
+        var title = 'Keluar';
+        
+        $('#title_product').html('Transaksi '+title)
         var date ='';
         $('#date').click(function(){
             var $start = $('#start_date').val();
@@ -80,7 +85,7 @@
             TableToExcel.convert(table[0], {
                 // html code may contain multiple tables so here we are refering to 1st table tag
 
-                name: `export-stock.xlsx`, // fileName you could use any name
+                name: `export-transaksi.xlsx`, // fileName you could use any name
                 sheet: {
                     name: 'Sheet 1' // sheetName
                 },
@@ -92,39 +97,36 @@
             loadingTable('#data');
         
             getData(url+'?type='+parmas+date, token).done(function(response) {
-                if (response.code == 201) {
-                    notAuthorized();
-                }
+            
                 isi = ``;
 
                 if (response.data.stock.length > 0) {
                     nomer = 1;
                     type = '';
-                    sumqtykeluar = 0;
-                    sumqtymasuk = 0;
-                    QtyMasuk = 0;
-                    QtyKeluar = 0;
+                    sum = 0;
+                    sumqty = 0;
                     data='';
                     $.each(response.data.stock, function(i, val) {
-                        
-                        
+                        sum += val.product.price*val.qty;
+                        sumqty += val.qty;
                         if(val.type == 'in'){
-                            sumqtymasuk += val.qty;
-                            QtyMasuk=val.qty;
                             type = `<span class="badge text-bg-success">Masuk</span>`;
                         }else{
-                            sumqtykeluar += val.qty;
-                            QtyKeluar=val.qty;
                             type = `<span class="badge text-bg-danger">Keluar</span>`;
                         }
 
                         isi += `
                         <tr>
                             <td>`+val.date+`</td>
-                            <td>`+val.product.product_name+`</td>
-                          <td>`+QtyMasuk+`</td>
-                            <td>`+QtyKeluar+`</td>
                             <td>`+val.product.brand+`</td>
+                            <td>`+val.product.product_name+`</td>
+                            <td>Rp.`+val.product.price+`.000 / item</td>
+                            <td>
+                                `+type+`
+                            </td>
+                            <td>`+val.qty+`</td>
+                            <td>Rp.`+val.product.price*val.qty+`.000</td>
+                            <td>`+val.note+`</td>
                         </tr>
                         `;
                         nomer++;
@@ -133,12 +135,15 @@
                 }
                 if (response.data.stock.length > 0) {
                     data = `<tr>
-                                <td><span class="badge text-bg-success">Total</span></td>
-                                <td></td>
-                                <td><span class="badge text-bg-success">`+sumqtymasuk+`</span></td>
-                                <td><span class="badge text-bg-success">`+sumqtykeluar+`</span></td>
-                                <td></td>
-                            </tr>`;
+                                        <td><span class="badge text-bg-success">Total Produk `+title+`</span></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><span class="badge text-bg-success">`+sumqty+`</span></td>
+                                        <td><span class="badge text-bg-success">Rp.`+sum.toString().split("-")+`.000</span></td>
+                                        <td></td>
+                                    </tr>`;
                 }else{
                     data='';
                 }
@@ -148,18 +153,6 @@
         }
 
         start(date);
-function notAuthorized() {
-            $('#data').html(`
-            <tr>
-                <td colspan="8" class="text-center">Kamu tidak memiliki akses !</td>
-            </tr>
-            `);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Kamu tidak memiliki akses !',
-                footer: '<a href="{{ url('/') }}">Kembali ke Home</a>'
-            })
-        }
+
     </script>
     @endsection

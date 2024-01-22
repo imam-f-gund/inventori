@@ -16,6 +16,16 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
         $categories = Category::all();
 
         return response()->json([
@@ -43,6 +53,16 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
        $categories = Category::create($request->all());
         
         return response()->json([
@@ -83,6 +103,16 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
       $categories = Category::find($id)->update($request->all());
 
         return response()->json([
@@ -100,6 +130,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+        
        $data = Category::find($id);
         $data->delete();
 

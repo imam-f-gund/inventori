@@ -42,10 +42,18 @@ class DatabaseSeeder extends Seeder
             [
                 [
                     'first_name' => 'Admin',
-                    'last_name' => 'User',
+                    'last_name' => 'tes',
                     'username' => 'admin',
                     'email' => 'admin@example.com',
                     'role_id' => 1,
+                    'password' => bcrypt('password'),
+                ],
+                [
+                    'first_name' => 'User',
+                    'last_name' => 'tes',
+                    'username' => 'user',
+                    'email' => 'user@example.com',
+                    'role_id' => 2,
                     'password' => bcrypt('password'),
                 ]
             ]

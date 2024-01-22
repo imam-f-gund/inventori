@@ -17,6 +17,16 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+        
         $products = Product::with('category')->orderBy('date_input', 'DESC')->paginate(8);
         
         return response()->json([
@@ -44,6 +54,16 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
         $product = new Product;
         $product->product_name = $request->product_name;
         $product->brand = $request->brand;
@@ -101,6 +121,16 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
         $product = Product::find($id);
         $product->product_name = $request->product_name;
         $product->brand = $request->brand;
@@ -135,6 +165,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
         $product = Product::find($id);
         
         if ($product->image != null) {

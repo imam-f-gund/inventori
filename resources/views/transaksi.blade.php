@@ -102,6 +102,10 @@
             loadingTable('#data');
         
             getData(url+'?type='+parmas+date, token).done(function(response) {
+                if (response.code == 201) {
+                    notAuthorized();
+                }
+
                 isi = ``;
 
                 if (response.data.stock.length > 0) {
@@ -157,6 +161,18 @@
         }
 
         start(date);
-
+function notAuthorized() {
+            $('#data').html(`
+            <tr>
+                <td colspan="8" class="text-center">Kamu tidak memiliki akses !</td>
+            </tr>
+            `);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Kamu tidak memiliki akses !',
+                footer: '<a href="{{ url('/') }}">Kembali ke Home</a>'
+            })
+        }
     </script>
     @endsection

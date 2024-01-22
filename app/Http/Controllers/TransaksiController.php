@@ -15,6 +15,16 @@ class TransaksiController extends Controller
      */
     public function index(Request $request)
     {  
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
         if ($request->type == 'stok') {
             if(($request->start_date == null) && ($request->end_date == null)){
                 $stock = Stock::with('product')->OrderBy('date','desc')->limit(50)->get();
@@ -38,8 +48,6 @@ class TransaksiController extends Controller
                 $stock = Stock::with('product')->where('stocks.type',$request->type)->whereBetween('date', [$request->start_date, $request->end_date])->OrderBy('date','desc')->get();
             }
         }
-
-        
         
         return response()->json([
             'success' => true,

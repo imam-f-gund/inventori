@@ -47,4 +47,10 @@ Route::get('/monitoring-stok', function () {
 Route::get('/monitoring-kas', function () {
     return view('monitoring-kas');
 });
+Route::get('/pemesanan', function () {
+    return view('pemesanan');
+});
+Route::get('/laporan-pemesanan', function () {
+    return view('laporan-pemesanan');
+});
 

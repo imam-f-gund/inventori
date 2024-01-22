@@ -16,7 +16,17 @@ class StokController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+        
         $product = Product::orderBy('date_input', 'DESC')->paginate(12);
         
         return response()->json([
@@ -44,7 +54,16 @@ class StokController extends Controller
      */
     public function store(StockRequest $request)
     {
-       
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+
         $product = Product::find($request->product_id);
         $stock = new Stock;
         if ($request->type == 'in') {
@@ -87,6 +106,16 @@ class StokController extends Controller
      */
     public function show($id)
     {
+        $role = auth('sanctum')->user();
+
+        if ($role->role_id != 1) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Authorized',
+                'code' => 201,
+            ], 201);
+        }
+        
         $stock = Stock::where('product_id', $id)->orderBy('date', 'DESC')->get();
         $product = Product::find($id);
 

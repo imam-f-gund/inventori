@@ -5,7 +5,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahStokLabel">Stok Masuk</h5>
+                    <h5 class="modal-title" id="tambahStokLabel">Pemesanan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                 </div>
@@ -37,7 +37,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="kurangStokLabel">Stok Keluar</h5>
+                    <h5 class="modal-title" id="kurangStokLabel">Pemesanan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                 </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="btnkurangstok">Simpan</button>
+                        <button type="button" class="btn btn-primary" id="btnkurangstok">Ya</button>
                     </div>
                 </form>
             </div>
@@ -71,7 +71,7 @@
                 <div class="card mt-5">
                     <div class="card-header">
                         <div class="col">
-                            <h2 class="main-title my-auto">Stok Produk</h2>
+                            <h2 class="main-title my-auto">Pemesanan</h2>
                         </div>
                     </div>
                     <div class="card-body text-center my-auto">
@@ -105,8 +105,8 @@
 
 @section('js')
 <script>
-    var url = "{{ url('/api/product') }}";
-    var urlStock = "{{ url('/api/stock') }}";
+    var url = "{{ url('/api/pemesanan') }}";
+    var urlStock = "{{ url('/api/pemesanan') }}";
     var parms;
     loadingTable('#load');
         $(document).on("click", '.next', function() {
@@ -160,27 +160,14 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <button type="button" class="btn btn-warning btn-block"
-                                           id="btnModals" data-btn="tambahstok" data-id="`+val.id+`" data-value="`+val.category_id+`|">
-                                           <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col">
-                                        <button type="button" class="btn btn-danger w-100"
-                                           id="btnModals" data-btn="kurangstok" data-id="`+val.id+`" data-value="`+val.category_id+`|">
-                                           <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
+
                                 <hr>
                                 <div class="row">
                                     <div class="col text-center">
-                                        <a href="{{ url('stock/' . '`+val.id+`') }}" 
-                                        >
-                                            Detail
-                                        </a>
+                                        <button type="button" class="btn btn-warning w-100"
+                                           id="btnModals" data-btn="kurangstok" data-id="`+val.id+`" data-value="`+val.category_id+`|">
+                                           <i class="fas fa-plus"> Pesan</i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +266,7 @@
                 document.getElementById("btnkurangstok").disabled = false;
             } else {
                 $('#exampleModal').modal('hide');
-                successAlert(response.message);
+                successAlert('berhasil dipesan');
                 $('#exampleModal').modal('toggle');
                 start();
                 loading('#btnkurangstok',false,'Simpan');

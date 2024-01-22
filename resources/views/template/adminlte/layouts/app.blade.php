@@ -33,7 +33,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
               localStorage.setItem('photo', response.photo);
               localStorage.setItem('email', response.email);
               localStorage.setItem('name', response.username);
+              if (response.role_id == 1) {
+                  localStorage.setItem('role', 'admin');
+              }else{
+                  localStorage.setItem('role', 'user');
+              }
+              
+              $("#username").html(response.username);
               $("#name").html(response.username);
+              
           }).fail(function(jqXHR, textStatus, errorThrown) {
               localStorage.removeItem("token");
               localStorage.removeItem("photo");
@@ -155,16 +163,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="{{ asset('adminlte/img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="{{url('/')}}" class="d-block">Admin</a>
+          <a href="{{url('/')}}" class="d-block" id="username">
+            
+          </a>
         </div>
       </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="menu_cek">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               @include('template.adminlte.layouts.menu')
+              
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -198,7 +208,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script>
       photo = localStorage.getItem('photo');
       name = localStorage.getItem('name');
-
+      
+      if (localStorage.getItem('role') == 'admin') {
+        $('#menu_cek').html(`@include('template.adminlte.layouts.menu')`);
+      }else{
+        $('#menu_cek').html(`@include('template.adminlte.layouts.menu-user')`);
+      }
       if (photo == null || photo == "null") {
           photo =
           "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png";

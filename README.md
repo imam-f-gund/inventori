@@ -80,7 +80,8 @@ http://127.0.0.1:8000
 
 | Username   | Password |
 | ---------- | -------- |
-| superadmin | password |
+| admin      | password |
+| user       | password |
 
 ## License
 

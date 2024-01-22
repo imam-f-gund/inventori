@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PemesananStokController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -31,10 +32,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('category', CategoryController::class)->except('show', 'edit');
     Route::resource('product', ProductController::class)->except('show', 'edit');
     Route::resource('stock', StokController::class)->only('show', 'index', 'store');
+
+    Route::resource('pemesanan', PemesananStokController::class)->only('show', 'index', 'store');
+    Route::get('laporan-pemesanan', [PemesananStokController::class, 'laporan']);
     
     Route::get('transaksi', [TransaksiController::class, 'index']);
-   
-    Route::middleware('cek:1')->group(function () {
-        Route::resource('user', UserController::class);
-    });
+
 });

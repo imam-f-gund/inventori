@@ -15,14 +15,6 @@
     </li>
     </ul>
 </li>
-{{-- <li class="nav-item">
-  <a href="{{ url('/category') }}" class="nav-link">
-    <i class="nav-icon far fa-plus-square"></i>
-    <p>
-      Category
-    </p>
-  </a>
-</li> --}}
 <li class="nav-item">
   <a href="{{ url('/stock') }}" class="nav-link">
     <i class="nav-icon far fa-image"></i>
@@ -85,3 +77,4 @@
     </li>
     </ul>
 </li>
+
