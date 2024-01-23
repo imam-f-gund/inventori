@@ -125,7 +125,7 @@
         
             getData(url, token).done(function(response) {
 
-                $('#data').html(response.data.stock);
+                $('#data').html(response.data.sisa_stock);
                 $('#data-total-product').html(response.data.total_product);
                 $('#data-transaksi-masuk').html(response.data.transaksi_masuk);
                 $('#data-transaksi-keluar').html(response.data.transaksi_keluar);
