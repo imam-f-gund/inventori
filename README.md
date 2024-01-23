@@ -7,6 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+
 ## FLOW DIAGRAM
 
 <p align="center"><a href="" target="_blank"><img src="https://raw.githubusercontent.com/imam-f-gund/inventory/master/public/images/flowdiagram.jpg" width="400"></a></p>
