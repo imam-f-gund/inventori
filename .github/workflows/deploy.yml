@@ -21,4 +21,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "sudo chmod +x /var/www/invetory.imamf.my.id/.scripts/deploy.sh && cd /var/www/invetory.imamf.my.id && ./.scripts/deploy.sh && sudo chmod -R ugo+rw storage"
+          script: "sudo chmod +x /var/www/inventory.imamf.my.id/.scripts/deploy.sh && cd /var/www/inventory.imamf.my.id && ./.scripts/deploy.sh && sudo chmod -R ugo+rw storage"
