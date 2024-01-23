@@ -60,7 +60,7 @@ class RegisterController extends Controller
             $user->username = $request->username;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->role_id = 1;
+            $user->role_id = 2;
             $user->save();
 
             $data['message'] = 'Berhasil register';
