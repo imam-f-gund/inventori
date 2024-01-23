@@ -120,9 +120,14 @@
                     $('#btnLogin').html(`<span>Login</span>`);
                     document.getElementById("btnLogin").disabled = false;
                 } else {
-                   
+                    if (response.data.user.role_id == 1) {
+                        localStorage.setItem('menu', 'admin');
+                    }else{
+                        localStorage.setItem('menu', 'user');
+                    }
                     // if (response.data.user.role_id == '1') {
                         localStorage.setItem('token', response.data.token);
+                        localStorage.setItem('name',response.data.user.username)
                         // document.getElementById("btnLogin").disabled = false;
                         window.location.href = "{{ url('/') }}";
                     // } else {

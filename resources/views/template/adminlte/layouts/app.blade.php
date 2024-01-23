@@ -30,17 +30,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               },
               contentType: 'application/json; charset=utf-8',
           }).done(function(response, responseText, xhr) {
-              localStorage.setItem('photo', response.photo);
-              localStorage.setItem('email', response.email);
-              localStorage.setItem('name', response.username);
-              if (response.role_id == 1) {
-                  localStorage.setItem('role', 'admin');
-              }else{
-                  localStorage.setItem('role', 'user');
-              }
-              
-              $("#username").html(response.username);
-              $("#name").html(response.username);
               
           }).fail(function(jqXHR, textStatus, errorThrown) {
               localStorage.removeItem("token");
@@ -206,14 +195,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     @yield('js')
     <script>
+      $(document).ready(function() {
+        if (localStorage.getItem('menu') == 'admin') {
+          $('#menu_cek').html(`@include('template.adminlte.layouts.menu')`);
+        }else{
+          $('#menu_cek').html(`@include('template.adminlte.layouts.menu-user')`);
+        } 
+      });
+
       photo = localStorage.getItem('photo');
-      name = localStorage.getItem('name');
-      
-      if (localStorage.getItem('role') == 'admin') {
-        $('#menu_cek').html(`@include('template.adminlte.layouts.menu')`);
-      }else{
-        $('#menu_cek').html(`@include('template.adminlte.layouts.menu-user')`);
-      }
+      $("#username").html(localStorage.getItem('name'));
+      $("#name").html(localStorage.getItem('name'));      
+    
       if (photo == null || photo == "null") {
           photo =
           "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png";

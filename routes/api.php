@@ -6,6 +6,7 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PemesananStokController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,5 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('laporan-pemesanan', [PemesananStokController::class, 'laporan']);
     
     Route::get('transaksi', [TransaksiController::class, 'index']);
+
+    Route::get('dashboard', [DashboardController::class, 'index']);
 
 });
