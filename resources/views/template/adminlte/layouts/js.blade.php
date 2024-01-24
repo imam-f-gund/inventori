@@ -99,7 +99,7 @@
     function loadingTable(name){
         
         $(name).html(`<tr>
-            <td colspan="8" class="text-center">
+            <td colspan="9" class="text-center">
                 <div class="spinner-border spinner-grow-lg" role="status">
                 </div>
                 <div>

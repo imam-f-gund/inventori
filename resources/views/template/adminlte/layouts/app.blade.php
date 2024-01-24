@@ -30,7 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               },
               contentType: 'application/json; charset=utf-8',
           }).done(function(response, responseText, xhr) {
-              
+              $('#infoRequest').html(response.infoRequest);
           }).fail(function(jqXHR, textStatus, errorThrown) {
               localStorage.removeItem("token");
               localStorage.removeItem("photo");

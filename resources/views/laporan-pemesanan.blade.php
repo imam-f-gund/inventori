@@ -43,6 +43,7 @@
                                         <th>Qty</th>
                                         <th>Nilai</th>
                                         <th>Note</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="data">
@@ -127,6 +128,7 @@
                             <td>`+val.qty+`</td>
                             <td>Rp.`+val.product.price*val.qty+`.000</td>
                             <td>`+val.note+`</td>
+                            <td>`+val.status+`</td>
                         </tr>
                         `;
                         nomer++;
@@ -142,6 +144,7 @@
                                         <td></td>
                                         <td><span class="badge text-bg-success">`+sumqty+`</span></td>
                                         <td><span class="badge text-bg-success">Rp.`+sum.toString().split("-")+`.000</span></td>
+                                        <td></td>
                                         <td></td>
                                     </tr>`;
                 }else{

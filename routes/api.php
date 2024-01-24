@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PemesananStokController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserRequestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,5 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('transaksi', [TransaksiController::class, 'index']);
 
     Route::get('dashboard', [DashboardController::class, 'index']);
+
+    Route::resource('user-request', UserRequestController::class);
 
 });
