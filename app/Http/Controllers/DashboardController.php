@@ -19,9 +19,10 @@ class DashboardController extends Controller
         $transaksi_keluar = 0;
         $transaksi_masuk = 0;
         $total_keluar = 0;
+        $total_product = 0;
 
         if(auth('sanctum')->user()->role_id != 1){
-            $stock = HistoryTransaksion::where('type', 'out')->where('user_id',auth('sanctum')->user()->id)->sum('qty');
+            $stock = HistoryTransaksion::where('type', 'out')->where('status', 'approved')->where('user_id',auth('sanctum')->user()->id)->sum('qty');
             
         }else{
             $stock = Product::sum('qty');

@@ -18,6 +18,7 @@ class HistoryTransaksion extends Model
         'date_input',
         'type',
         'note',
+        'status'
     ];
 
     
@@ -25,5 +26,11 @@ class HistoryTransaksion extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 }

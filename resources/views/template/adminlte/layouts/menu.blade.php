@@ -24,6 +24,15 @@
   </a>
 </li>
 <li class="nav-item">
+  <a href="{{ url('/user-request') }}" class="nav-link">
+    <i class="nav-icon far fa-envelope"></i>
+    <p>
+      Permintaan
+      <span class="badge badge-info right" id="infoRequest"></span>
+    </p>
+  </a>
+</li>
+<li class="nav-item">
   <a href="{{ url('/product') }}" class="nav-link">
     <i class="nav-icon fas fa-table"></i>
     <p>

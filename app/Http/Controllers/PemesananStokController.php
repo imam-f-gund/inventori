@@ -29,15 +29,8 @@ class PemesananStokController extends Controller
     {
         try {
             DB::beginTransaction();
-            $product = Product::find($request->product_id);
-            $stock = new Stock;
             $history = new HistoryTransaksion;
-        if ($request->type == 'in') {
-            $stock->qty = $request->qty;
-            $product->qty = $product->qty + $request->qty; 
-            
-            $history->qty = $request->qty;
-        } else {
+            $product = Product::find($request->product_id);
             if ($request->qty > $product->qty) {
             
                 return response()->json([
@@ -46,32 +39,24 @@ class PemesananStokController extends Controller
                     'data' => null
                 ], 200);
             }
-
-            $stock->qty = $request->qty;
+            
             $history->qty = $request->qty;
-            $product->qty = $product->qty - $request->qty;
-        }
-
-        $stock->product_id = $request->product_id;
-        $stock->date = now();
-        $stock->note = $request->note;
-        $stock->type = $request->type;
-        $stock->save(); 
+            
+            $history->product_id = $request->product_id;
+            $history->user_id = auth('sanctum')->user()->id;
+            $history->date = now();
+            $history->note = $request->note;
+            $history->type = $request->type;
+            $history->status = 'pending';
+            $history->save();
         
-        $history->product_id = $request->product_id;
-        $history->user_id = auth('sanctum')->user()->id;
-        $history->date = now();
-        $history->note = $request->note;
-        $history->type = $request->type;
-        $history->save();
-    
-        $product->save();
+           
         DB::commit();
 
         return response()->json([
             'success' => true,
-            'message' => 'Stok berhasil diupdate',
-            'data' => $stock
+            'message' => 'Request berhasil',
+            'data' => $history
         ], 200);
 
         } catch (\Throwable $th) {
@@ -103,10 +88,10 @@ class PemesananStokController extends Controller
     public function laporan(Request $request)
     {
         if(($request->start_date == null) && ($request->end_date == null)){
-            $stock = HistoryTransaksion::with('product')->OrderBy('date','desc')->where('history_transaksion.type', 'out')->where('user_id',auth('sanctum')->user()->id)->limit(50)->get();
+            $stock = HistoryTransaksion::with('product')->OrderBy('id','desc')->where('history_transaksion.type', 'out')->where('user_id',auth('sanctum')->user()->id)->limit(50)->get();
             
         }else{
-            $stock = HistoryTransaksion::with('product')->whereBetween('date', [$request->start_date, $request->end_date])->OrderBy('date','desc')->get();
+            $stock = HistoryTransaksion::with('product')->whereBetween('date', [$request->start_date, $request->end_date])->OrderBy('id','desc')->get();
             
         }
         

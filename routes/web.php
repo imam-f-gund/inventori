@@ -53,4 +53,7 @@ Route::get('/pemesanan', function () {
 Route::get('/laporan-pemesanan', function () {
     return view('laporan-pemesanan');
 });
+Route::get('/user-request', function () {
+    return view('user-request');
+});
 
