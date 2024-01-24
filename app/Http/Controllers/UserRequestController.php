@@ -157,8 +157,9 @@ class UserRequestController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Stok berhasil diupdate',
-                'data' => $stock
-            ], 200);
+                'data' =>$history
+
+           ], 200);
 
         } catch (\Throwable $th) {
             DB::rollback();
