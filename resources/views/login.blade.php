@@ -40,13 +40,20 @@
                 <label class="form-label-wrapper">
                     <p class="form-label">Username</p>
                     <input class="form-input" type="text" placeholder="Enter your username" name="username" required>
+                    <div>
+                        <small id="usernameHelp" class="form-text text-danger">username : admin</small>
+                    </div>
                 </label>
+               
                 <label class="form-label-wrapper">
                     <p class="form-label">Password</p>
                     <input class="form-input" type="password" placeholder="Enter your password" name="password"
                         required>
+                        <div>
+                            <small id="passwordHelp" class="form-text text-danger">password : password</small>
+                        </div>
                 </label>
-
+                
                 <button type="button" id="btnLogin" class="form-btn secondary-default-btn">Masuk</button>
                 <a href="{{url('/register')}}" type="button" id="btnLogin" class="form-btn primary-default-btn">Register</a>
        
